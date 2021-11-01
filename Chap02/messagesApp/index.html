@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Messages App</title>
+        <style>
+            /* 브라우저에서 파일을 열 때 Vue가 생성한 새로운 DOM으로 대체되기 전까지 템플릿 마크업이 나타나는 플래시 현상이 발생하지 않도록 하는 CSS 규칙 */
+            [v-cloak] {display: none;}
+            body > div {width: 1000px; margin: 0 auto;}
+            textarea { width: 100%;}
+            ul {padding: 0 15px;}
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <ul>
+                <!-- Vue에 내장된 v-for directive로 메시지 리스트를 렌더링 함. -->
+                <li v-for="message in messages">
+                    <!-- 메시지를 표시하는 템플릿, 템플릿을 부착 지점에 직접 넣는 방식 -->
+                    <!-- 이중 중괄호인 Mustache 구문, messages 리스트에 있는 message 객체의 text, createdAt property를 출력함. -->
+                    {{message.text}} - {{message.createdAt}} 
+                    <!-- @click : v-on:click 의 줄임말 -->
+                    <button @click="deleteMessage(message)">X</button>
+                </li>
+            </ul>
+            <!-- Vue의 v-on directive로, form의 submit 이벤트에 이벤트 리스너를 부착함. 
+                    prevent는 브라우저가 실제로 폼을 제출하지 않도록 Vue 에 event.preventDefault() 호출을 지시하는 수식어임.-->
+            <form v-on:submit.prevent="addMessage">
+                <!-- Vue의 v-model directive, textarea 요소와 data 객체의 newMessage property 사이에 양방향 바인딩을 생성함. 
+                    textare 요소의 값이 변경될 때마다 newMessage가 자동으로 업데이트됨. textarea 요소에 직접 접근하지 않고도 값을 얻을 수 있음. -->
+                <textarea v-model="newMessage" placeholder="Leave a message"></textarea>
+                <div>
+                    <!-- <button v-bind:disabled="messages.length >= 10" type="submit">Add</button> -->
+                    <!-- ':' : v-bind 의 줄임말 -->
+                    <button :disabled="addDisabled" type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <script>
+            let vm = new Vue({
+                el: '#app',
+                data: { //객체 리터럴
+                    messages: [],   //배열
+                    newMessage: ''      //문자열
+                },
+                computed: {
+                    addDisabled(){
+                        return this.messages.length >= 10 || this.newMessage.length > 50;
+                    }
+                },
+                methods: {
+                    addMessage(event) {
+                        if(!this.newMessage) {return;}
+                            this.messages.push({
+                                text: this.newMessage, createdAt: new Date()});
+                            this.newMessage = '';
+                    },
+                    deleteMessage(message) {
+                        this.messages.splice(this.messages.indexOf(message), 1)
+                    }
+                }
+            });
+        </script>
+
+    </body>
+</html>
