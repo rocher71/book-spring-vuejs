@@ -1,0 +1,51 @@
+<!-- vue js checked radio value 가져오기 -->
+
+<!-- <!DOCTYPE html>
+<html>
+    <body>
+        <div id="app" v-cloak>
+            <input type="radio" name="radioBtn" id="r1" @change="radioChange($event)" value="첫번째 버튼">
+            <label for="r1">첫번째</label>
+            <input type="radio" name="radioBtn" id="r2" @change="radioChange($event)" value="두번째 버튼">
+            <label for="r2">두번째</label>
+            <input type="radio" name="radioBtn" id="r3" @change="radioChange($event)" value="세번째 버튼">
+            <label for="r3">세번재</label>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <script>
+ 
+            let vm = new Vue({
+                el: '#app',
+                methods: {
+                    radioChange(event){
+                    var selected = event.target.value;
+                    console.log("selected : ", selected);
+                }
+                }
+            });
+        </script>
+    </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <div>
+            <input type="radio" name="radioBtn" id="r1" onclick="radioChange()" value="첫번째 버튼">
+            <label for="r1">첫번째</label>
+            <input type="radio" name="radioBtn" id="r2" onclick="radioChange()" value="두번째 버튼">
+            <label for="r2">두번째</label>
+            <input type="radio" name="radioBtn" id="r3" onclick="radioChange()" value="세번째 버튼">
+            <label for="r3">세번재</label>
+        </div>
+
+        <script>
+            function radioChange(event){
+            var selected = document.querySelector('input[name="radioBtn"]:checked').value
+            console.log("순수 js selected : ", selected);
+        }
+        </script>
+    </body>
+</html>
